@@ -1,0 +1,7 @@
+title: Sheet Standardiser
+tooltip: >-
+  Renames every sheet's number and name to the project standard
+  (BIMEra: A-101 Ground Floor Plan, A-102 First Floor Plan, ..., Roof Plan).
+  Shows a preview first; one Ctrl+Z undoes it. Shift+click opens the rules file.
+author: BIMEra (Session 5 demo)
+context: doc-project

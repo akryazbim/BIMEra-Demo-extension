@@ -1,0 +1,9 @@
+{
+  "_about": "Duct Openings settings. Edit, save, click the button again.",
+  "clearance_mm": 50,
+  "round_up_to_mm": 10,
+  "min_angle_deg": 30,
+  "duplicate_tolerance_mm": 50,
+  "family_file": "BIMEra_Wall_Opening.rfa",
+  "family_name": "BIMEra_Wall_Opening"
+}

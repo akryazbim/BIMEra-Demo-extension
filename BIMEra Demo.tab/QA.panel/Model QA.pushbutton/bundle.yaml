@@ -1,0 +1,7 @@
+title: Model QA
+tooltip: >-
+  Opens a QA dashboard for the open model: rooms (not placed, not enclosed, no name),
+  views not on sheets, warnings, in-place families and imported CAD.
+  Filter, double-click to select and zoom, export to CSV. Reads only: changes nothing.
+author: BIMEra (Session 5 demo)
+context: doc-project

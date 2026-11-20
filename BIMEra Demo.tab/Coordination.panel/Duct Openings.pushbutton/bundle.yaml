@@ -1,0 +1,8 @@
+title: Duct Openings
+tooltip: >-
+  Finds every place a duct passes through a wall and cuts an opening
+  (duct size + 50 mm clearance each side) with a simple wall-hosted void family.
+  Uses selected ducts, or all ducts. Running it again creates no duplicates.
+  One Ctrl+Z undoes it. Shift+click opens the settings.
+author: BIMEra (Session 5 demo)
+context: doc-project

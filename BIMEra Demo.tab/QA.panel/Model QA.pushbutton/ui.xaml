@@ -1,0 +1,142 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BIMEra Model QA" Width="1120" Height="700" MinWidth="820" MinHeight="480"
+        WindowStartupLocation="CenterScreen" ShowInTaskbar="True"
+        Background="#F6F3EC" Foreground="#15253A"
+        FontFamily="IBM Plex Sans, Segoe UI" FontSize="13">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Ink" Color="#15253A"/>
+        <SolidColorBrush x:Key="Red" Color="#C22F28"/>
+        <SolidColorBrush x:Key="Blue" Color="#1C62C2"/>
+        <SolidColorBrush x:Key="Paper" Color="#F6F3EC"/>
+        <SolidColorBrush x:Key="Rule" Color="#C9C2B3"/>
+        <Style x:Key="Card" TargetType="Button">
+            <Setter Property="Background" Value="#FFFDF8"/>
+            <Setter Property="Foreground" Value="#15253A"/>
+            <Setter Property="BorderBrush" Value="#15253A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="MinWidth" Value="128"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Left"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E8EEF8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Action" TargetType="Button">
+            <Setter Property="Background" Value="#FFFDF8"/>
+            <Setter Property="Foreground" Value="#15253A"/>
+            <Setter Property="BorderBrush" Value="#15253A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="#15253A"/>
+            <Setter Property="Foreground" Value="#F6F3EC"/>
+            <Setter Property="FontFamily" Value="IBM Plex Mono, Consolas"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+    </Window.Resources>
+
+    <Border BorderBrush="#15253A" BorderThickness="2" Margin="10">
+        <Grid Margin="14,10,14,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="MODEL QA" FontFamily="Archivo, Segoe UI" FontWeight="Black" FontSize="26" Foreground="#15253A"/>
+                    <TextBlock x:Name="subtitle" Text="model" FontFamily="IBM Plex Mono, Consolas" FontSize="12" Foreground="#5A6577"/>
+                </StackPanel>
+                <Border HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="#C22F28" BorderThickness="2" Padding="10,4">
+                    <TextBlock x:Name="total_text" Text="0 ISSUES" FontFamily="Archivo, Segoe UI" FontWeight="Bold" FontSize="16" Foreground="#C22F28"/>
+                </Border>
+            </Grid>
+
+            <!-- Summary cards: click one to filter -->
+            <WrapPanel Grid.Row="1" x:Name="cards" Margin="0,0,0,10"/>
+
+            <!-- Filter bar -->
+            <DockPanel Grid.Row="2" Margin="0,0,0,8" LastChildFill="True">
+                <TextBlock Text="SHOW" FontFamily="IBM Plex Mono, Consolas" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <ComboBox x:Name="check_combo" Width="190" Margin="0,0,12,0" SelectionChanged="filter_changed"/>
+                <TextBlock Text="SEARCH" FontFamily="IBM Plex Mono, Consolas" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBox x:Name="search_box" Padding="4,3" BorderBrush="#15253A" TextChanged="filter_changed"/>
+            </DockPanel>
+
+            <!-- Issue list -->
+            <ListView Grid.Row="3" x:Name="issues" BorderBrush="#15253A" BorderThickness="1" Background="#FFFDF8"
+                      SelectionMode="Extended" MouseDoubleClick="zoom_clicked"
+                      VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="CHECK" Width="150" DisplayMemberBinding="{Binding Check}"/>
+                        <GridViewColumn Header="SEVERITY" Width="80" DisplayMemberBinding="{Binding Severity}"/>
+                        <GridViewColumn Header="PROBLEM" Width="290" DisplayMemberBinding="{Binding Problem}"/>
+                        <GridViewColumn Header="ELEMENT" Width="230" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="DETAIL" Width="210" DisplayMemberBinding="{Binding Detail}"/>
+                        <GridViewColumn Header="ID" Width="90" DisplayMemberBinding="{Binding IdText}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Actions -->
+            <DockPanel Grid.Row="4" Margin="0,10,0,10">
+                <Button Content="Select &amp; zoom" Style="{StaticResource Action}" Background="#1C62C2" Foreground="White" BorderBrush="#1C62C2" Click="zoom_clicked"/>
+                <Button Content="Refresh" Style="{StaticResource Action}" Click="refresh_clicked"/>
+                <Button Content="Export CSV" Style="{StaticResource Action}" Click="export_clicked"/>
+                <Button Content="Close" Style="{StaticResource Action}" DockPanel.Dock="Right" Margin="0" Click="close_clicked"/>
+                <TextBlock x:Name="status" VerticalAlignment="Center" Margin="8,0" Foreground="#5A6577" TextTrimming="CharacterEllipsis"
+                           Text="Double-click a row, or select rows and click Select &amp; zoom."/>
+            </DockPanel>
+
+            <!-- Title block -->
+            <Border Grid.Row="5" BorderBrush="#15253A" BorderThickness="0,1.5,0,0" Margin="-14,0">
+                <Grid Height="34">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" BorderBrush="#15253A" BorderThickness="0,0,1,0" Padding="10,0">
+                        <TextBlock Text="BIMEra DEMO" FontFamily="Archivo, Segoe UI" FontWeight="Bold" VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="#15253A" BorderThickness="0,0,1,0" Padding="10,0">
+                        <TextBlock x:Name="tb_model" Text="" FontFamily="IBM Plex Mono, Consolas" FontSize="11" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </Border>
+                    <Border Grid.Column="2" BorderBrush="#15253A" BorderThickness="0,0,1,0" Padding="10,0">
+                        <TextBlock x:Name="tb_date" Text="" FontFamily="IBM Plex Mono, Consolas" FontSize="11" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Grid.Column="3" Text="QA-01" FontFamily="Archivo, Segoe UI" FontWeight="Black" FontSize="15"
+                               Foreground="#C22F28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

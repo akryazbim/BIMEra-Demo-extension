@@ -1,0 +1,12 @@
+{
+  "_about": "BIMEra sheet standard (Session 3). Edit the values, save, click the button again.",
+  "number_pattern": "A-{number}",
+  "number_start": 101,
+  "name_pattern": "{storey} Floor Plan",
+  "roof_sheet_name": "Roof Plan",
+  "roof_match": "roof",
+  "storey_words": ["Ground", "First", "Second", "Third", "Fourth", "Fifth",
+                   "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"],
+  "plan_view_types": ["FloorPlan"],
+  "ground_tolerance_mm": 1
+}

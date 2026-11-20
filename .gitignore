@@ -1,0 +1,6 @@
+*.log
+*.csv
+*.pyc
+__pycache__/
+*.bak
+*.000*.rfa
