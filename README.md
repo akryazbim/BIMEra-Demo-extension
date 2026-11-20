@@ -27,3 +27,7 @@ and Reload pyRevit.
 ## Use at your own risk
 
 Run new tools on a copy of your model first. These are teaching examples, not certified production tools.
+
+## Versions
+
+- 1.0 (20 Nov 2026): first version.
