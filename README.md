@@ -14,9 +14,14 @@ Shift+click Sheet Standardiser or Duct Openings to open its settings file.
 
 Option 1, from Git (needs pyRevit 7; Git itself is not needed):
 
-    pyrevit extend ui "BIMEra Demo" <repository URL>
+    pyrevit extend ui BIMEraDemo <repository URL> --branch=main
 
-Update later with `pyrevit extensions update "BIMEra Demo"`, then Reload in Revit.
+Update later with `pyrevit extensions update BIMEraDemo`, then Reload in Revit.
+
+Notes (tested with pyRevit 7.0.1):
+- `--branch=main` is needed: without it pyRevit looks for a `master` branch and fails ("reference 'refs/remotes/origin/master' not found").
+- pyRevit finds an installed extension by the `name` in `extension.json` (here `BIMEraDemo`), and the name is read as a pattern that ignores spaces, so a name with a space ("BIMEra Demo") can't be updated by name. That's why the name has no space. The ribbon tab is still called "BIMEra Demo".
+- `pyrevit extend` registers its destination folder as an extension path by itself.
 
 Option 2, from a shared folder: put this folder inside a shared folder, then
 
