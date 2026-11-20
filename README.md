@@ -14,7 +14,7 @@ Shift+click Sheet Standardiser or Duct Openings to open its settings file.
 
 Option 1, from Git (needs pyRevit 7; Git itself is not needed):
 
-    pyrevit extend ui BIMEraDemo <repository URL> --branch=main
+    pyrevit extend ui BIMEraDemo https://github.com/akryazbim/BIMEra-Demo-extension.git --branch=main
 
 Update later with `pyrevit extensions update BIMEraDemo`, then Reload in Revit.
 
